@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NimexArc - Centered Profile and Image Collection</title>
+
+<style>
+  /* Reset and base body styling */
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #232526, #414345);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+  }
+
+  /* Container centered with limited width */
+  .container {
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Wrapper for profile pic and username to align vertically */
+  .profile-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+  /* Profile Pic styling */
+  .profile-pic {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .profile-pic:hover {
+    transform: scale(1.1);
+  }
+
+  /* Username styling */
+  .username {
+    margin-top: 14px;
+    font-weight: 600;
+    font-size: 1.8rem;
+    user-select: none;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  .username:hover {
+    transform: scale(1.1);
+  }
+
+  /* Rounded toggle button */
+  .button {
+    background: linear-gradient(135deg, #ffffff, #a0a0a0);
+    color: #111;
+    padding: 14px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    user-select: none;
+    transition: all 0.35s ease;
+    border: none;
+    margin-bottom: 24px;
+  }
+  .button:hover {
+    background: linear-gradient(135deg, #f5f5f5, #b8b8f8);
+    transform: translateY(-3px);
+  }
+
+  /* Vertical image collection list initially hidden */
+  .carousel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    opacity: 0;
+    max-height: 0;
+    pointer-events: none;
+    overflow: hidden;
+    transition: opacity 0.4s ease, max-height 0.4s ease;
+  }
+  .carousel.active {
+    opacity: 1;
+    max-height: 1000px;
+    pointer-events: auto;
+  }
+
+  /* Individual image post link styled as rounded pill */
+  .image-post {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255,255,255,0.1);
+    padding: 12px 20px;
+    border-radius: 30px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    user-select: none;
+    opacity: 0;
+    transform: translateY(20px);
+    animation-fill-mode: forwards;
+    animation-name: fadeSlideUp;
+    animation-duration: 0.5s;
+    transition: background 0.3s ease;
+  }
+
+  /* Delay each item's animation for sequential fade-in */
+  .image-post:nth-child(1) { animation-delay: 0.1s; }
+  .image-post:nth-child(2) { animation-delay: 0.2s; }
+  .image-post:nth-child(3) { animation-delay: 0.3s; }
+
+  /* Thumbnail style as circle */
+  .image-post img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+  .image-post:hover {
+    background: rgba(255,255,255,0.25);
+  }
+  .image-post:hover img {
+    transform: scale(1.1);
+  }
+
+  /* Fade and slide up animation */
+  @keyframes fadeSlideUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Profile pic and username vertically stacked and centered -->
+    <div class="profile-wrapper">
+      <img src="https://i.postimg.cc/cLSZRBKN/IMG-20251018-131251-289.webp" alt="Profile Picture" class="profile-pic" />
+      <h2 class="username">@nimeXarc</h2>
+    </div>
+
+    <!-- Image collection toggle button -->
+    <button class="button" id="toggleImages">🖼️ Image Collection</button>
+
+    <!-- Vertical image links list -->
+    <div class="carousel" id="images">
+      <a href="https://1024terabox.com/s/16yqc2gtvr6EOeOvrjSNK9Q" target="_blank" class="image-post">
+        <img src="https://i.postimg.cc/Mpx3Z8bh/yamato-mumeiai-28-2.jpg" alt="Post #1 Thumbnail" />
+        <span>Post #1</span>
+      </a>
+      <a href="#" class="image-post">
+        <img src="https://via.placeholder.com/60x60/33A1FF/FFFFFF?text=P2" alt="Post #2 Thumbnail" />
+        <span>Post #2</span>
+      </a>
+      <a href="#" class="image-post">
+        <img src="https://via.placeholder.com/60x60/A1FF33/FFFFFF?text=P3" alt="Post #3 Thumbnail" />
+        <span>Post #3</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const toggleImagesBtn = document.getElementById('toggleImages');
+    const imagesCarousel = document.getElementById('images');
+
+    toggleImagesBtn.addEventListener('click', () => {
+      imagesCarousel.classList.toggle('active');
+      toggleImagesBtn.textContent = imagesCarousel.classList.contains('active') ? "🖼️ Hide Image Collection" : "🖼️ Image Collection";
+    });
+  </script>
+
+</body>
+</html>
